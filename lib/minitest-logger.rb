@@ -144,14 +144,14 @@ with this parameter.
           log.outputters << outputter = Log4r::StringOutputter.new('stringoutputter') 
           outputter.level = level if level
           outputter.formatter = formatter if formatter
-        when 'Logger'
+        when 'Logger', 'ActiveSupport::Logger'
           log.catch_messages(level)
         end
       yield #call block to get messages
       case log.class.to_s
         when 'Log4r::Logger'
           logtext = outputter.flush
-        when 'Logger'
+        when 'Logger', 'ActiveSupport::Logger'
           logtext = log.catch_messages_stop()
         end      
       return logtext
